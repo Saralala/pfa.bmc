@@ -1,1 +1,20 @@
 % windows.tex
+
+
+\subsubsection{Structure de l'interface graphique}
+
+Pour le développement de l'interface sous Windows, un concepteur graphique a été utilisé pour faciliter l'implémentation de l'application. De plus, le programme produit est bien interprété par un lecteur d'écran. Le concepteur utilisé est Visual Studio, un outil de développement permettant de générer des applications bureautiques et des applications mobiles.
+
+Dans un souci de cohérence, l'interface graphique de l'application sous Windows reprend parfaitement la même structure globale que celle de l'interface sous Linux. Ainsi, la fenêtre principale est divisée en deux parties : la première, un \textit{RichTextBox}, permettant d'afficher et de modifier les partitions brailles et la seconde, un \textit{WebBrowser}, qui affiche le fichier PDF contenant les notes. (voir Figure \ref{windows}).
+
+\begin{figure}[!h]
+\begin{center}
+  \includegraphics[width=1\textwidth]{images/windows.png}
+  \caption{Apparence de l'interface graphique sous Windows}
+  \label{windows}
+\end{center}
+\end{figure}
+
+\subsubsection{Fonctionnalités}
+
+Comme cité précédemment, l'interface graphique sous Windows reprend les mêmes fonctionnalités et raccourcis de l'interface sous Linux mise à part la connexion avec le compilateur de BMC. Cependant, la lecture des fichiers MIDI est implémenté, et ce grâce à l'appel à \textit{Windows Media Player} qui est le lecteur audio utilisé par défaut par Windows. Il en est de même pour l'affichage des fichiers PDF qui s'appuie sur le \textit{WebBrowser} qui lui-même fait appel à \textit{Internet Explorer}, ce dernier choisissant le logiciel utilisé pour l'affichage.
