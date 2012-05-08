@@ -1,8 +1,8 @@
 
-\textit{Braille music compiler} est un programme qui a pour objectif
-de transformer un fichier écrit en \textit{Braille Music} en un autre
+\textit{Braille Music Compiler} est un programme qui a pour objectif
+de transformer un fichier écrit en \textit{braille music} en un autre
 langage utilisable par d'autres applications. La difficulté est que le
-langage \textit{Braille Music} possède beaucoup d'ambiguïtés, en effet
+langage \textit{braille music} possède beaucoup d'ambiguïtés, en effet
 par exemple pour connaître la note exacte en cours, il est nécessaire
 de savoir quelles ont été les notes précédentes. \`A l'heure actuelle
 le programme arrive correctement à compiler le langage \textit{Braille
@@ -15,19 +15,18 @@ formats de musique. Par exemple :
 \item MusicXML 
 \item lilypond (Equivalent au Latex, mais pour la musique)
 \end{itemize}
-Le schéma \ref{compiler} résume le fonctionement de BMC.
+Le schéma \ref{compiler} résume le fonctionement de \textit{BMC}.
 
 \begin{figure}[!h]
   \centering
   \includegraphics[width=1\textwidth]{images/fonction-bmc.png}
-  \caption{Schéma visuel du fonctionement de BMC}
+  \caption{Schéma visuel du fonctionement de \textit{BMC}}
   \label{compiler}
 \end{figure}
 
 Notre travail a été d'implémenter quelque uns de ces modules de
 conversion. Pour cela il est nécessaire de comprendre comment est
-conçu le langage Abstrait. Après la compilation du \textit{Braille
-  Music}, l'ensemble des données sont stockées dans une structure
+conçu le langage Abstrait. Après la compilation du \textit{braille music}, l'ensemble des données sont stockées dans une structure
 nommée "score". Cette structure est une multitude de vecteurs
 imbriqués les uns dans les autres. Voici le code de la strucure suivi
 d'une représentation visuel (\ref{score}) :
@@ -78,7 +77,7 @@ une partition de musique ses différents termes.
 \end{figure}
 
 À partir de ce langage intermédiaire nous avons pu réaliser deux
-classes qui ont été intégré dans le programme bmc. Chaqu'une d'elle
+classes qui ont été intégré dans le programme \textit{BMC}. Chaqu'une d'elle
 créer un fichier représentant une partition braille passée en argument
 dans un autre langage.
 
