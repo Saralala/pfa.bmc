@@ -1,21 +1,20 @@
 
-\textit{Braille Music Compiler} est un programme qui a pour objectif
+\textit{Braille music compiler} est un programme qui a pour objectif
 de transformer un fichier écrit en \textit{braille music} en un autre
-langage utilisable par d'autres applications. La difficulté est que le
-langage \textit{braille music} possède beaucoup d'ambiguïtés, en effet
-par exemple pour connaître la note exacte en cours, il est nécessaire
+langage utilisable par d'autres applications. La difficulté tient du fait que le
+langage \textit{braille music} peut être très ambigu. En effet,
+pour connaître la note exacte en cours, il est nécessaire
 de savoir quelles ont été les notes précédentes. \`A l'heure actuelle
-le programme arrive correctement à compiler le langage \textit{Braille
-  Music} en un langage Abstrait qui lui ne possède aucune
-ambiguïté. Ce langage abstrait peut être converti en n'importe quels
-formats de musique. Par exemple :
+le programme arrive correctement à compiler le braille
+  musical en un langage \textit{Abstrait} qui lui ne possède aucune
+ambiguïté. Ce langage abstrait peut être converti en différents formats. Par exemple :
 
 \begin{itemize}
-\item MIDI (Format AUDIO)
-\item MusicXML 
-\item lilypond (Equivalent au Latex, mais pour la musique)
+\item MIDI (Musical Instrument Digital Interface) ;
+\item MusicXML ;
+\item lilypond (équivalent au Latex, mais pour la musique).
 \end{itemize}
-Le schéma \ref{compiler} résume le fonctionement de \textit{BMC}.
+La Figure \ref{compiler} résume le fonctionnement de \textit{BMC}.
 
 \begin{figure}[!h]
   \centering
@@ -24,12 +23,13 @@ Le schéma \ref{compiler} résume le fonctionement de \textit{BMC}.
   \label{compiler}
 \end{figure}
 
-Notre travail a été d'implémenter quelque uns de ces modules de
-conversion. Pour cela il est nécessaire de comprendre comment est
-conçu le langage Abstrait. Après la compilation du \textit{braille music}, l'ensemble des données sont stockées dans une structure
+Le travail effectué consistait à implémenter quelques uns de ces modules de
+conversion. Pour cela il a été nécessaire de comprendre comment est
+conçu le langage Abstrait. Après la compilation du \textit{braille
+  music}, l'ensemble des données sont stockées dans une structure
 nommée "score". Cette structure est une multitude de vecteurs
 imbriqués les uns dans les autres. Voici le code de la strucure suivi
-d'une représentation visuel (\ref{score}) :
+d'une représentation visuelle (Figure \ref{score}) :
 
 \begin{verbatim}
 typedef boost::variant<note, rest, chord, value_distinction, hand_sign, simile, barline>;
@@ -56,18 +56,18 @@ struct score {
   \label{score}
 \end{figure}
 
-Il est donc maintenant plus facile d'expliquer la structure
-\textit{score}. Un fichier de musique braille peut donc se diviser en
-plusieurs parties (parts). Chaque partie possède un ou plusieurs
-"staff". Un "staff" n'est autre que la portée, typiquement si le
+%ùIl est donc maintenant plus facile d'expliquer la structure \textit{score}.
+ Un fichier de musique braille peut donc se diviser en
+plusieurs parties (\textit{parts}). Chaque partie possède un ou plusieurs
+\textit{staff}. Un \textit{staff} n'est autre que la portée. Typiquement si le
 compositeur écrit une partition de musique pour piano il y aura deux
 portées. Chaque portée possède un nombre de mesures. Si la musique
-composée est polyphonique il y aura plusieurs voix ("voices"). Une
+composée est polyphonique il y aura plusieurs voix (\textit{voices}). Une
 voix est ensuite divisée en mesures partielles, ces mesures partielles
-pouvant de nouveau être divisées en voix ("partial\_voices") qui elles
-sont divisées en un vecteur de \textit{sign}. Un sign pouvant être une
-note, un repos, une barre ... La figure \ref{musicexe} représente sur
-une partition de musique ses différents termes.
+pouvant de nouveau être divisées en voix partielles (\textit{partial\_voices}) qui elles
+sont divisées en un vecteur de \textit{sign}. Un \textit{sign} pouvant être une
+note, un repos, une barre ... La Figure \ref{musicexe} représente, sur
+une partition de musique, ces différents termes.
 
 
 \begin{figure}[!h]
@@ -76,9 +76,7 @@ une partition de musique ses différents termes.
   \label{musicexe}
 \end{figure}
 
-À partir de ce langage intermédiaire nous avons pu réaliser deux
-classes qui ont été intégré dans le programme \textit{BMC}. Chaqu'une d'elle
-créer un fichier représentant une partition braille passée en argument
+À partir de ce langage intermédiaire, deux classes ont été mises en place et intégrées dans le programme \textit{BMC}. Chacune d'elles
+crée un fichier représentant une partition braille passée en argument
 dans un autre langage.
-
 

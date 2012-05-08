@@ -1,2 +1,63 @@
 % midi.tex
+\subsubsection{Le format de fichier MIDI}
+Le format MIDI est assez simple à résumer. Il comporte un ensemble fini d'entiers compris entre 0 et 127 représentant la note que l'on entend. Chaque octave est composée de douze tonalités comme indiqué dans la Figure \ref{midiNote}.  
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{images/midiNotes.png}
+\caption{Notes MIDI}
+\label{midiNote}
+\end{figure}
+
+La lecture d'un flux MIDI se fait linéairement: le lecteur lit des messages de statut, par exemple NOTE\_ON, et les deux arguments qui suivent, qui correspondent au numéro de note à jouer ainsi que la vélocité d'attaque de la note. La Figure \ref{midiHexa} présente l'aperçu d'un fichier MIDI:
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{images/midiHexa.png}
+\caption{Fichier MIDI}
+\label{midiHexa}
+\end{figure}
+
+Dans cet exemple, on peut trouver:
+\begin{itemize}
+\item \textit{0x90} Message de statut : NOTE\_ON \textit{0x3C} Numéro de note: 60 \textit{0x5F} Vélocité: 90
+\item \textit{0x80} Message de statut : NOTE\_OFF \textit{0x3C} Numéro de note: 60 \textit{0x00} Vélocité: 0
+\end{itemize}
+On notera que la vélocité est de 0 lors d'un message NOTE\_OFF. En effet, la notion de vélocité n'a pas vraiment de sens lorsqu'il s'agit d'arrêter de jouer une note.
+
+\subsubsection{Librairie utilisée}
+La librairie à trouver devait répondre à des besoins de bas niveaux que présentait l'objectif de sortie MIDI à partir du fichier braille. En effet, la plupart des librairies existantes portent sur la lecture de flux MIDI. Après maintes recheches, nous avons finalement décidé d'utiliser la libraire SMF (Standard MIDI File format). Le travail a pu démarrer sur l'exportation du format braille vers le MIDI. Il est à noter que la librairie est écrite en C mais que le développeur l'a rendu compatible avec les compilateurs C++ en utilisant le mot clé $extern$ pour le linkage.
+
+\subsubsection{L'exportation}
+Deux classes ont été créées afin de réaliser l'exportation:
+\begin{itemize}
+  \item toMidi ;
+  \item keyWithInfo.
+\end{itemize}
+
+La classe \textit{toMidi} sert à redéfinir les opérateurs () de la même façon que ce qui a été fait pour l'exportation au format \textit{Lilypond}, avec bien entendu des différences dans le traitement.
+La classe \textit{keyWithInfo} est celle qui contient l'information nécessaire à l'exportation:
+\begin{verbatim}
+class noteWithInfo{
+  public:
+     braille::ambiguous::note *note;
+     int accidental;
+     double start_date;
+     double end_date;
+     bool begin_repeat;
+     bool end_repeat;
+     int nb_repetitions;
+};
+\end{verbatim}
+Le champ \textit{note} provient de la structure de M.Lang. Il contient les informations quant à l'octave, le numéro de la note, la durée (par l'utilisation de méthodes que M.Lang a créées). Le champ \textit{accidental} correspond au nombre de dièses ou de bémols qu'il y a devant la note.
+Enfin, les champs les plus interessants sont les derniers: \textit{start\_date} et \textit{end\_date} correspondent à la date de départ de la note et celle de sa fin, en temps absolu. Les champs \textit{begin\_repeat} et \textit{end\_repeat} sont des booléens qui indiquent si on a un debut de zone de répétition ou de fin de zone de répétition. Enfin, le champs \textit{nb\_repetitions} correspond au nombre de fois que la zone repérée doit être répétée. 
+
+Le parcours de la structure abstraite de M.Lang  est donc effectué et stocke des pointeurs vers des objets de type \textit{noteWithInfo} dans le champs $std::list<noteWithInfo*>song[2]$ de la classe \textit{toMidi}. On notera que \textit{song} est donc un tableau de deux listes contenant des pointeurs vers des \textit{noteWithInfo} afin de représenter les notes contenues dans une partition à deux clés commes les partitions pour piano par exemple. Il sera facile pour le client de paramétrer cette valeur, le parcours réalisé étant générique.
+
+\subsubsection{L'enregistrement}
+Une fois le tableau de listes rempli, on se sert des primitives de la librairies \textit{smf} afin de créer la note MIDI correspondant à chaque cellule. Les primitives de la librairies permettent alors d'écrire dans un fichier les messages ainsi créés. Le traitement étant générique, l'enregistrement marchepour des partitions à deux clés mais tout autant que pour plus ou moins. Deux méthodes ont été mises en place à cette fin:
+\begin{itemize}
+\item $void toMidi::unfold\_ repetitions()$ ;
+\item $void toMidi::generate\_ midi\_ file()$.
+\end{itemize}
+La méthode $unfold\_ repetitions$ est nécessaire car la librairie n'a pas de fonctionnalité gérant les répétitions. Il a donc été nécessaire de recopier les zones à répéter dans la liste en prenant en compte les temps de démarrage et de fin. 
+La méthode $generate\_ midi\_ file$ est celle qui parcourt le tableau de listes \textit{song} et qui utilise les fonctions de la librairies SMF afin de générer le fichier \textit{midi}.
 
