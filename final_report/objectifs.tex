@@ -1,10 +1,58 @@
 % objectifs.tex
 
+Bien que la majorité des objectifs de ce projet ait été atteint il
+reste quelques fonctionnalités non implémentées. Celles-ci n'étant
+que secondaires cela ne pose pas de problème majeur à notre client au
+vu du temps dont disposait notre équipe. En effet celui-ci désirait
+que soit faites en priorité les tâches qui lui poseraient le plus de
+problèmes.
+
+Voici un résumé de ces fonctionnalités et quelques pistes de
+développement.
+
+ 
 \subsection{Portage sous Windows}
+L'interface graphique de \textit{BMC} sous Windows étant implémentée
+il reste à faire le portage du programme. Ce portage n'était
+initialement pas contenu dans les besoins du client. Celui-ci nous a
+proposé cette tâche ultérieurement. Cependant ce travail nécessite une
+dépense en temps trop importante car il implique de s'intéresser à
+tout le code du \textit{BMC} y compris au \textit{frontend} qui n'a jamais
+été étudié.
 
-\subsection{GUI sous MacOs}
 
-\subsection{Autres formats de sortie pour \textit{BMC}}
+\subsection{Portage sous MacOs}
+L'implémentation de l'\textit{IDE} sous MacOs est envisagée car il
+reste un des systèmes les plus utilisés. Cependant, à l'heure
+actuelle, le pourcentage d'utilisateurs de ce système est trop faible
+pour permettre une dépense de temps importante à re-coder une
+\textit{GUI}.
 
-\subsection{Autres fonctionnalitées du gui}
+\subsection{Autres formats de sortie pour BMC}
+La possibilité de créer des sorties dans d'autres formats (ex: avi,
+mp3, ...) est envisageable. Pour cela il existe deux moyens
+d'implémentation. Le premier consiste à s'intéresser à la construction
+d'un tel fichier puis de le créer à l'aide de librairies ou bien
+directement dans l'IDE. La seconde option est de faire appel à des
+logiciels, de préférence multi-plateforme, convertissant un fichier de
+nos format de sortie actuel (ex: MIDI) en un fichier au format
+souhaité. Cette dernière solution bien qu'algorithmiquement plus
+longue à l'avantage d'être codée assez rapidement.
+
+
+\subsection{Autres fonctionnalités de l'IDE}
+Des fonctionnalités suplémentaires ont été imaginées pour
+l'IDE. Voici quelques unes des possibilités d'amélioration.
+
+Listen the selection/Écoute de la sélection : L'utilisateur déclenche
+la lecture audio de la selection du texte braille en appuyant sur un
+bouton ou avec un raccourci clavier.  Cet outil n'a pas pu voir le
+jour car elle demande une connaissance approfondie du \textit{braille music}.
+En effet il faut pour cela créer une partition correcte avec les
+en-têtes nécessaires correspondant uniquement à la partie sélectionné.
+Malheureusement nos connaissances dans ce langage sont quasiment
+nulles.
+
+%écouter la sélection // déplacer le curseur au fur et à mesure
+
 
